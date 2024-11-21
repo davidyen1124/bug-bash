@@ -4,13 +4,13 @@ body {
   height: 100vh;
   overflow: hidden;
   background: linear-gradient(to bottom, #b0e0e6, #98fb98);
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><text x="0" y="96" font-size="96">🔨</text></svg>')
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><text x="0" y="48" font-size="48">🔨</text></svg>')
       16 16,
     auto;
 }
 
 body:active {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><text x="0" y="96" font-size="96">💥</text></svg>')
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><text x="0" y="48" font-size="48">💥</text></svg>')
       16 16,
     auto;
 }
