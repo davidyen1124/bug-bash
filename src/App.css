@@ -7,6 +7,12 @@ body {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><text x="0" y="48" font-size="48">🔨</text></svg>')
       16 16,
     auto;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body:active {
@@ -26,11 +32,16 @@ body:active {
   font-size: 60px;
   width: 60px;
   height: 60px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   transition: opacity 0.2s;
   z-index: 2;
   touch-action: none;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 .squashed {
@@ -45,6 +56,12 @@ body:active {
   z-index: 1;
   touch-action: none;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #score {
