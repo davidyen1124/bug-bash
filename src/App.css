@@ -29,6 +29,8 @@ body:active {
   user-select: none;
   transition: opacity 0.2s;
   z-index: 2;
+  touch-action: none;
+  outline: none;
 }
 
 .squashed {
@@ -41,6 +43,8 @@ body:active {
   pointer-events: none;
   transition: none;
   z-index: 1;
+  touch-action: none;
+  outline: none;
 }
 
 #score {
