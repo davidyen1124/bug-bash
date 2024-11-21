@@ -109,6 +109,14 @@ function App() {
         bugElement.innerText = '🪦' // Change to tomb emoji
         bugElement.classList.add('squashed')
         bug.isSquashed = true
+
+        // Remove the tomb after 10 seconds
+        setTimeout(() => {
+          if (bugElement && gameAreaRef.current.contains(bugElement)) {
+            gameAreaRef.current.removeChild(bugElement)
+            bugListRef.current = bugListRef.current.filter((b) => b.id !== id)
+          }
+        }, 10000)
       }
 
       setScore((prev) => prev + 1)
