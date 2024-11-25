@@ -4,6 +4,15 @@ import './App.css'
 
 const bugs = ['🐛', '🐜', '🪲', '🐞']
 
+// Game configuration constants
+const MAX_BUGS = 30
+const BUG_SIZE = 30 // Size in pixels for bug emoji
+const INITIAL_BUG_COUNT = 20
+const SPEED_MULTIPLIER = 5
+const BOUNDARY_MARGIN = BUG_SIZE // Margin from window edges
+const ROTATION_DEGREES = 360
+const TOMB_REMOVAL_DELAY = 10000 // 10 seconds in milliseconds
+
 // Define a Bug class
 class Bug {
   constructor(id, x, y, type, dx, dy) {
@@ -14,6 +23,7 @@ class Bug {
     this.dx = dx
     this.dy = dy
     this.isSquashed = false
+    this.rotation = 0
   }
 
   // Update the bug's position and handle boundary collisions
@@ -24,13 +34,15 @@ class Bug {
     this.y += this.dy
 
     // Reverse direction if the bug hits the window boundaries
-    if (this.x < 0 || this.x > window.innerWidth - 30) {
+    if (this.x < 0 || this.x > window.innerWidth - BOUNDARY_MARGIN) {
       this.dx = -this.dx
       this.x += this.dx
+      this.rotation = (this.rotation + ROTATION_DEGREES) % ROTATION_DEGREES
     }
-    if (this.y < 0 || this.y > window.innerHeight - 30) {
+    if (this.y < 0 || this.y > window.innerHeight - BOUNDARY_MARGIN) {
       this.dy = -this.dy
       this.y += this.dy
+      this.rotation = (this.rotation + ROTATION_DEGREES) % ROTATION_DEGREES
     }
   }
 }
@@ -43,22 +55,20 @@ function App() {
 
   // Function to create a new bug
   const createBug = useCallback(() => {
-    if (bugListRef.current.length >= 30) return // Limit the number of bugs to 30
+    if (bugListRef.current.length >= MAX_BUGS) return
 
     const id = uuidv4()
 
-    const x = Math.random() * (window.innerWidth - 60)
-    const y = Math.random() * (window.innerHeight - 60)
-
-    const speedMultiplier = 5
+    const x = Math.random() * (window.innerWidth - BUG_SIZE * 2)
+    const y = Math.random() * (window.innerHeight - BUG_SIZE * 2)
 
     const newBug = new Bug(
       id,
       x,
       y,
       bugs[Math.floor(Math.random() * bugs.length)],
-      (Math.random() - 0.5) * speedMultiplier,
-      (Math.random() - 0.5) * speedMultiplier
+      (Math.random() - 0.5) * SPEED_MULTIPLIER,
+      (Math.random() - 0.5) * SPEED_MULTIPLIER
     )
 
     bugListRef.current.push(newBug)
@@ -87,10 +97,12 @@ function App() {
 
       bug.updatePosition()
 
-      // Update the corresponding DOM element's position
+      // Update the corresponding DOM element's position and rotation
       if (bugElement) {
         bugElement.style.left = `${bug.x}px`
         bugElement.style.top = `${bug.y}px`
+        bugElement.style.transform = `rotate(${bug.rotation}deg)`
+        bugElement.style.transition = 'transform 0.3s ease'
       }
     })
 
@@ -116,7 +128,7 @@ function App() {
             gameAreaRef.current.removeChild(bugElement)
             bugListRef.current = bugListRef.current.filter((b) => b.id !== id)
           }
-        }, 10000)
+        }, TOMB_REMOVAL_DELAY)
       }
 
       setScore((prev) => prev + 1)
@@ -129,7 +141,7 @@ function App() {
   // Start the game on mount
   useEffect(() => {
     // Create 20 bugs initially
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < INITIAL_BUG_COUNT; i++) {
       createBug()
     }
 
